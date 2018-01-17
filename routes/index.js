@@ -12,33 +12,27 @@ router.get('/_api/package.json',(req, res, next)=> {
   
 router.get('/',(req, res)=> {
 		  res.sendFile(process.cwd() + '/views/index.html');
-    })
+    });
 
-router.get('/time/:time', (req,res)=>{
-      const date = new Date(req.params.time);
-  
-  if ( toString.call(date) === "[object Date]" ) {
-  // it is a date
-  if ( isNaN( date.getTime() ) ) {  // d.valueOf() could also work
-    // date is not valid
-    console.log("not valid");
+router.get('/time/:time', (req, res) => {
+  const date = new Date(req.params.time);
+  if (toString.call(date) === "[object Date]") {// it is a date  
+    if (isNaN(date.getTime())) {  // d.valueOf() could also work
+      // date is not valid
+      console.log("not valid");
+    }
+    else { // date is valid
+      console.log("valid");
+    }
   }
-  else {
-    console.log("valid");
-    // date is valid
+  else { // not a date  
+    console.log("invalid");
   }
-}
-else {
-  // not a date
-  console.log("valid");
-}
-  
- 
-res.send(req.params.time);
-})
+  res.send(req.params.time);
+});
 
 router.get('/layout',(req,res)=>{
 res.sendFile(process.cwd() + '/views/layout.html');
-})
+});
            
 module.exports = router;
