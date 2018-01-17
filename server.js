@@ -5,12 +5,12 @@
 
 'use strict';
 
-var fs = require('fs');
-var express = require('express');
-var app = express();
+const fs = require('fs');
+const express = require('express');
+const app = express();
 
 if (!process.env.DISABLE_XORIGIN) {
-  app.use(function(req, res, next) {
+  app.use((req, res, next)=> {
     var allowedOrigins = ['https://narrow-plane.gomix.me', 'https://www.freecodecamp.com'];
     var origin = req.headers.origin || '*';
     if(!process.env.XORIG_RESTRICT || allowedOrigins.indexOf(origin) > -1){
@@ -24,28 +24,27 @@ if (!process.env.DISABLE_XORIGIN) {
 
 app.use('/public', express.static(process.cwd() + '/public'));
 
-app.route('/_api/package.json')
-  .get(function(req, res, next) {
+app.get('/_api/package.json',(req, res, next)=> {
     console.log('requested');
-    fs.readFile(__dirname + '/package.json', function(err, data) {
+    fs.readFile(__dirname + '/package.json', (err, data)=> {
       if(err) return next(err);
       res.type('txt').send(data.toString());
     });
   });
   
-app.route('/')
-    .get((req, res)=> {
+app.get('/',(req, res)=> {
 		  res.sendFile(process.cwd() + '/views/index.html');
     })
 
+
 // Respond not found to all the wrong routes
-app.use(function(req, res, next){
+app.use((req, res, next)=>{
   res.status(404);
   res.type('txt').send('Not found');
 });
 
 // Error Middleware
-app.use(function(err, req, res, next) {
+app.use((err, req, res, next)=> {
   if(err) {
     res.status(err.status || 500)
       .type('txt')
@@ -53,7 +52,7 @@ app.use(function(err, req, res, next) {
   }  
 })
 
-app.listen(process.env.PORT, function () {
+app.listen(process.env.PORT,()=> {
   console.log('Node.js listening ...');
 });
 
