@@ -15,11 +15,30 @@ router.get('/',(req, res)=> {
     })
 
 router.get('/time/:time', (req,res)=>{
+      const date = new Date(req.params.time);
+  
+  if ( Object.prototype.toString.call(date) === "[object Date]" ) {
+  // it is a date
+  if ( isNaN( date.getTime() ) ) {  // d.valueOf() could also work
+    // date is not valid
+    console.log("not valid");
+  }
+  else {
+    console.log("valid");
+    // date is valid
+  }
+}
+else {
+  // not a date
+  console.log("valid");
+}
+  
+ 
 res.send(req.params.time);
 })
 
 router.get('/layout',(req,res)=>{
-res.render(process.cwd() + '/views/layout.html');
+res.sendFile(process.cwd() + '/views/layout.html');
 })
            
 module.exports = router;
