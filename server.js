@@ -7,6 +7,8 @@
 
 const fs = require('fs');
 const express = require('express');
+const routes = require('./routes/index.js');
+
 const app = express();
 
 if (!process.env.DISABLE_XORIGIN) {
@@ -24,18 +26,7 @@ if (!process.env.DISABLE_XORIGIN) {
 
 app.use('/public', express.static(process.cwd() + '/public'));
 
-app.get('/_api/package.json',(req, res, next)=> {
-    console.log('requested');
-    fs.readFile(__dirname + '/package.json', (err, data)=> {
-      if(err) return next(err);
-      res.type('txt').send(data.toString());
-    });
-  });
-  
-app.get('/',(req, res)=> {
-		  res.sendFile(process.cwd() + '/views/index.html');
-    })
-
+app.use('/', routes);
 
 // Respond not found to all the wrong routes
 app.use((req, res, next)=>{
