@@ -17,7 +17,7 @@ router.get('/',(req, res)=> {
 router.get('/time/:time', (req,res)=>{
       const date = new Date(req.params.time);
   
-  if ( Object.prototype.toString.call(date) === "[object Date]" ) {
+  if ( toString.call(date) === "[object Date]" ) {
   // it is a date
   if ( isNaN( date.getTime() ) ) {  // d.valueOf() could also work
     // date is not valid
