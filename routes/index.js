@@ -30,10 +30,14 @@ router.get('/:time', (req, res) => {
       const year = date.getFullYear();
       const day = `0${date.getDate()}`.slice(-2);
       const natural = `${month} ${day}, ${year}`;
-      response = {
-        unix,
-        natural
-      };
+      if (month == "August" && day == "13") {
+        response = "Birthday";
+      } else {
+        response = {
+          unix,
+          natural
+        };
+      }
     }
   }
   //need to convert number strings to numbers to make them work otherwise they return a weird date
@@ -44,6 +48,10 @@ router.get('/:time', (req, res) => {
   } else {
     processTime(new Date(enteredTime));
   }
-  res.send(response);
+  if (response == "Birthday") {
+    res.sendFile(process.cwd() + '/views/birthday.html');
+  } else {
+    res.send(response);
+  }
 });
 module.exports = router;
