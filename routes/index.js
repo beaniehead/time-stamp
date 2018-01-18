@@ -25,7 +25,7 @@ router.get('/:time', (req, res) => {
       }
     } else { // date is valid
       const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
-      const unix = date.getTime() / 1000;
+      const unix = Math.floor(date.getTime() / 1000);
       const month = months[date.getMonth()];
       const year = date.getFullYear();
       const day = `0${date.getDate()}`.slice(-2);
@@ -33,11 +33,13 @@ router.get('/:time', (req, res) => {
       response = {
         unix,
         natural
-      }
+      };
     }
   }
   //need to convert number strings to numbers to make them work otherwise they return a weird date
-  if (!isNaN(+enteredTime)) {
+  if (enteredTime.toLowerCase() == "now") {
+    processTime(new Date(Date.now()));
+  } else if (!isNaN(+enteredTime)) {
     processTime(new Date(+enteredTime * 1000));
   } else {
     processTime(new Date(enteredTime));
