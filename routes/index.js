@@ -15,6 +15,7 @@ router.get('/',(req, res)=> {
     });
 
 router.get('/time/:time', (req, res) => {
+  const enteredTime = req.params.time;
   const date = new Date(req.params.time);
   if (toString.call(date) === "[object Date]") {// it is a date  
     if (isNaN(date.getTime())) {  // d.valueOf() could also work
@@ -22,7 +23,9 @@ router.get('/time/:time', (req, res) => {
       console.log("not valid");
     }
     else { // date is valid
+      res.send(req.params.time);
       console.log("valid");
+      return;
     }
   }
   else { // not a date  
@@ -30,6 +33,8 @@ router.get('/time/:time', (req, res) => {
   }
   res.send(req.params.time);
 });
+
+
 
 router.get('/layout',(req,res)=>{
 res.sendFile(process.cwd() + '/views/layout.html');
