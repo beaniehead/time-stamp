@@ -20,18 +20,25 @@ router.get('/time/:time', (req, res) => {
   if (toString.call(date) === "[object Date]") {// it is a date  
     if (isNaN(date.getTime())) {  // d.valueOf() could also work
       // date is not valid
-      console.log("not valid");
+      res.send(`${enteredTime} is not valid.`);
     }
     else { // date is valid
-      res.send(req.params.time);
+      
+      const unix= new Date(enteredTime).getTime()/1000;
+      const natural = new Date(enteredTime).getFullYear();;
+      const time = {
+      unix,
+        natural
+      }
       console.log("valid");
+      
+      res.json(time);
       return;
     }
   }
   else { // not a date  
-    console.log("invalid");
+    res.send(`${enteredTime} is not valid.`);
   }
-  res.send(req.params.time);
 });
 
 
