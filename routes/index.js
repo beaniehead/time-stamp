@@ -15,10 +15,9 @@ router.get('/', (req, res) => {
 router.get('/time/:time', (req, res) => {
   var response;
   const enteredTime = req.params.time;
-  console.log(typeof enteredTime);
 
   const date = new Date(enteredTime);
-  console.log(date);
+ console.log(date);
       if (isNaN(date.getTime())) { // d.valueOf() could also work
       // date is not valid
       response = `${enteredTime} is not valid.`;
