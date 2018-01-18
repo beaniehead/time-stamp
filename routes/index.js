@@ -12,12 +12,20 @@ router.get('/_api/package.json', (req, res, next) => {
 router.get('/', (req, res) => {
   res.sendFile(process.cwd() + '/views/index.html');
 });
+
+
+
+
 router.get('/time/:time', (req, res) => {
   var response;
   const enteredTime = req.params.time;
 
   const date = new Date(enteredTime);
  //need to convert number strings to numbers to make them work otherwise they return a weird date
+  if(+enteredTime!=Nan){
+  }
+  
+  console.log(+enteredTime);
   //define whether input is natural language or numbers (see if it has anything other than numbers or is just a number)
       if (isNaN(date.getTime())) { // d.valueOf() could also work
       // date is not valid
@@ -38,5 +46,12 @@ router.get('/time/:time', (req, res) => {
   
   res.send(response);
 });
+
+
+
+
+
+
+
 
 module.exports = router;
