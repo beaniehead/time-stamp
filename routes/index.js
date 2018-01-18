@@ -15,30 +15,36 @@ router.get('/',(req, res)=> {
     });
 
 router.get('/time/:time', (req, res) => {
+  var response ;
   const enteredTime = req.params.time;
-  const date = new Date(req.params.time);
+  const date = new Date(enteredTime);
   if (toString.call(date) === "[object Date]") {// it is a date  
     if (isNaN(date.getTime())) {  // d.valueOf() could also work
       // date is not valid
-      res.send(`${enteredTime} is not valid.`);
+      response = `${enteredTime} is not valid.`;
+      
     }
     else { // date is valid
-      
-      const unix= new Date(enteredTime).getTime()/1000;
-      const natural = new Date(enteredTime).getFullYear();;
-      const time = {
+      const months = ["January","February","March","April","May","June","July","August","September","October","November","December"]
+      const unix= date.getTime()/1000;
+      const month = months[date.getMonth()];
+      const year = date.getFullYear();
+      const day = `0${date.getDate()}`.slice(-2);
+      const natural = `${month} ${day}, ${year}`;
+      response = {
       unix,
         natural
       }
-      console.log("valid");
       
-      res.json(time);
-      return;
+     
+      
     }
   }
   else { // not a date  
-    res.send(`${enteredTime} is not valid.`);
+    response = `${enteredTime} is not valid.`;
+    
   }
+  res.send(response);
 });
 
 
