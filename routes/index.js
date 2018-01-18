@@ -17,12 +17,13 @@ router.get('/time/:time', (req, res) => {
   const enteredTime = req.params.time;
 
   const date = new Date(enteredTime);
- 
+ //need to convert number strings to numbers to make them work otherwise they return a weird date
+  //define whether input is natural language or numbers (see if it has anything other than numbers or is just a number)
       if (isNaN(date.getTime())) { // d.valueOf() could also work
       // date is not valid
       response = `${enteredTime} is not valid.`;
     } else { // date is valid
-      console.log(date);
+      console.log(new Date(9));
       const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
       const unix = date.getTime() / 1000;
       const month = months[date.getMonth()];
